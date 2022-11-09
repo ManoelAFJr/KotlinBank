@@ -10,7 +10,7 @@ abstract class Conta(cliente: Cliente) : IConta {
     var cliente: Cliente
         protected set
 
-    init { //
+    init {
         agencia = AGENCIA_PADRAO
         numero = SEQUENCIAL++
         this.cliente = cliente
