@@ -2,48 +2,16 @@ import java.util.*
 
 class Banco {
     var nome: String? = null
-    var scan = Scanner(System.`in`)
+    val contas: List<Conta>
+        get() = Companion.contas
 
-    private val contas: List<Conta> = ArrayList()
-    private val clientes: List<Cliente> = ArrayList()
 
-    fun Banco() {}
+    val clientes: List<Cliente>
+        get() = Companion.clientes
 
-    @JvmName("getNome1")
-    fun getNome(): String? {
-        return nome
-    }
-
-    @JvmName("setNome1")
-    fun setNome(nome: String?) {
-        this.nome = nome
-    }
-
-    fun getContas(): List<Conta?> {
-        return contas
-    }
-
-    fun setContas(contas: Conta?) {
-        this.contas.add(contas)
-    }
-
-    fun getClientes(): List<Cliente?> {
-        return clientes
-    }
-
-    fun setClientes(cliente: Cliente?) {
-        this.clientes.add(cliente)
-    }
-    fun acessarMenuConta(cpf: Int) {
-        for (conta in contas) {
-            if (conta.cliente.cpf == cpf) {
-                conta.menuConta()
-            }
-        }
-    }
 
     fun getConta(numConta: Int): Conta? {
-        for (conta in contas) {
+        for (conta in Companion.contas) {
             if (conta.numero == numConta) {
                 return conta
             }
@@ -52,17 +20,33 @@ class Banco {
     }
 
     fun listarClientes() {
-        if (clientes.isEmpty()) {
+        if (Companion.clientes.isEmpty()) {
             println("Nenhum Cliente cadastrado.")
         } else {
-            for (cliente in clientes) {
+            for (cliente in Companion.clientes) {
                 cliente.imprimirInformacoes()
             }
         }
     }
 
+    companion object {
+        var scan = Scanner(System.`in`)
+        private val contas: MutableList<Conta> = ArrayList()
+        private val clientes: MutableList<Cliente> = ArrayList()
+        fun acessarMenuConta(cpf: Int) {
+            for (conta in contas) {
+                if (conta.cliente.cpf == cpf) {
+                    conta.menuConta()
+                }
+            }
+        }
+        fun setContas(contas: Conta?) {
+            this.contas.add(contas!!)
+        }
+        fun setClientes(cliente: Cliente?) {
+            this.clientes.add(cliente!!)
+        }
     fun criarConta(): Boolean {
-        val opcao: Int
         var status = false
         println("|############################|")
         println("| Informe o tipo de Conta:   |")
@@ -72,59 +56,62 @@ class Banco {
         println("|   0 - Retornar ao menu     |")
         println("|                            |")
         println("|############################|")
-        opcao = scan.nextInt()
-        if (opcao == 1) {
-            println("Informe seu Nome:")
-            val nome: String = scan.next()
-            println("Informe seu CPF:")
-            val cpf: Int = scan.nextInt()
-            status = if (!verificarCpf(cpf)) {
-                val cliente = Cliente(nome, cpf)
+        when (scan.nextInt()) {
+            1 -> {
+                println("Informe seu Nome:")
+                val nome: String = scan.next()
+                println("Informe seu CPF:")
+                val cpf: Int = scan.nextInt()
+                status = if (!verificarCpf(cpf)) {
+                    val cliente = Cliente(nome, cpf)
 
-                clientes.add(cliente)
+                    clientes.add(cliente)
 
-                val contaCorrente: Conta = ContaCorrente(cliente)
-                contas.add(contaCorrente)
-                true
+                    val contaCorrente: Conta = ContaCorrente(cliente)
+                    contas.add(contaCorrente)
+                    true
 
-            } else {
-                false
+                } else {
+                    false
+                }
             }
-        } else if (opcao == 2) {
-            println("Informe seu Nome:")
-            val nome: String = scan.next()
-            println("Informe seu CPF:")
-            val cpf: Int = scan.nextInt()
-            status = if (!verificarCpf(cpf)) {
-                val cliente = Cliente(nome, cpf)
-                clientes.add(cliente)
-                val contaPoupanca: Conta = ContaPoupanca(cliente)
-                contas?.add(contaPoupanca)
-                true
-            } else {
-                false
+            2 -> {
+                println("Informe seu Nome:")
+                val nome: String = scan.next()
+                println("Informe seu CPF:")
+                val cpf: Int = scan.nextInt()
+                status = if (!verificarCpf(cpf)) {
+                    val cliente = Cliente(nome, cpf)
+                    clientes.add(cliente)
+                    val contaPoupanca: Conta = ContaPoupanca(cliente)
+                    contas?.add(contaPoupanca)
+                    true
+                } else {
+                    false
+                }
             }
-        } else if (opcao == 0) {
-        } else {
-            println("Opção escolhida invalida!!!")
-            status = false
+            0 -> {
+            }
+            else -> {
+                println("Opção escolhida invalida!!!")
+                status = false
+            }
         }
         return status
     }
 
-    fun verificarCpf(cpf: Int): Boolean {
-        var existe = false
-        for (cliente in Main.banco.getClientes()) {
-            existe = cliente?.cpf == cpf
+        fun verificarCpf(cpf: Int): Boolean {
+            var existe = false
+            for (cliente in Main.banco.clientes) {
+                existe = cliente.cpf == cpf
+            }
+            return existe
         }
-        return existe
-    }
 
+    }
     fun acessarConta() {
         println("\n\nInforme seu CPF:")
         val cpf = scan.nextInt()
         acessarMenuConta(cpf)
     }
 }
-
-private fun <E> List<E>.add(Conta: E) {}

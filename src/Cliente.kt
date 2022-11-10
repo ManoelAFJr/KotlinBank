@@ -10,7 +10,7 @@ class Cliente {
     constructor() {}
 
     fun getConta(cpf: Int): Conta? {
-        for (conta in Main.banco.getContas()) {
+        for (conta in Main.banco.contas) {
             conta?.imprimirInformacoes()
             if (conta?.cliente?.cpf == cpf) {
                 return conta

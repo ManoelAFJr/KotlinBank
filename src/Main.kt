@@ -1,4 +1,6 @@
 
+
+import Banco.Companion.criarConta
 import java.util.*
 
 object Main {
@@ -25,7 +27,7 @@ object Main {
             opcao = scan.nextInt()
             when (opcao) {
                 0 -> status = false
-                1 -> if (banco.criarConta()) {
+                1 -> if (criarConta()) {
                     banco.acessarConta()
                     break
                 } else {
