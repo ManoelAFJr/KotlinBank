@@ -46,7 +46,7 @@ object Main {
                     banco.listarClientes()
                     break
                 }
-                0-> {
+                else -> {
                     println("Operação indevida!!!")
                     status = false
                     break
