@@ -26,20 +26,30 @@ object Main {
             println("0 - Sair            >>>")
             opcao = scan.nextInt()
             when (opcao) {
-                0 -> status = false
-                1 -> if (criarConta()) {
+                0 -> {
+                    status = false
+                }
+                1 -> {
+                    if (criarConta()) {
+                        banco.acessarConta()
+                        break
+                    } else {
+                        println("Já existe uma conta com esse CPF!")
+                        break
+                    }
+                }
+                2 -> {
                     banco.acessarConta()
                     break
-                } else {
-                    println("Já existe uma conta com esse CPF!")
+                }
+                3 -> {
+                    banco.listarClientes()
                     break
                 }
-
-                2 -> banco.acessarConta()
-                3 -> banco.listarClientes()
-                else -> {
+                0-> {
                     println("Operação indevida!!!")
                     status = false
+                    break
                 }
             }
         }

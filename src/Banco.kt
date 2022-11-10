@@ -84,14 +84,14 @@ class Banco {
                     val cliente = Cliente(nome, cpf)
                     clientes.add(cliente)
                     val contaPoupanca: Conta = ContaPoupanca(cliente)
-                    contas?.add(contaPoupanca)
+                    contas.add(contaPoupanca)
                     true
                 } else {
                     false
                 }
             }
-            0 -> {
-            }
+
+            0 -> {}
             else -> {
                 println("Opção escolhida invalida!!!")
                 status = false
