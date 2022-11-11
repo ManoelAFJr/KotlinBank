@@ -33,7 +33,7 @@ class Banco {
         var scan = Scanner(System.`in`)
         private val contas: MutableList<Conta> = ArrayList()
         private val clientes: MutableList<Cliente> = ArrayList()
-        fun acessarMenuConta(cpf: Int) {
+        fun acessarMenuConta(cpf: Int){
             for (conta in contas) {
                 if (conta.cliente.cpf == cpf) {
                     conta.menuConta()
@@ -69,6 +69,7 @@ class Banco {
 
                     val contaCorrente: Conta = ContaCorrente(cliente)
                     contas.add(contaCorrente)
+                    println("Conta criada com sucesso.")
                     true
 
                 } else {
@@ -85,6 +86,7 @@ class Banco {
                     clientes.add(cliente)
                     val contaPoupanca: Conta = ContaPoupanca(cliente)
                     contas.add(contaPoupanca)
+                    println("Conta criada com sucesso")
                     true
                 } else {
                     false
@@ -109,9 +111,10 @@ class Banco {
         }
 
     }
-    fun acessarConta() {
+    fun acessarConta() : Boolean{
         println("\n\nInforme seu CPF:")
         val cpf = scan.nextInt()
         acessarMenuConta(cpf)
+        return true
     }
 }

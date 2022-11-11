@@ -31,25 +31,20 @@ object Main {
                 }
                 1 -> {
                     if (criarConta()) {
-                        banco.acessarConta()
-                        break
+                        status = banco.acessarConta()
                     } else {
-                        println("Já existe uma conta com esse CPF!")
-                        break
+                        println("Jï¿½ existe uma conta com esse CPF!")
                     }
                 }
                 2 -> {
-                    banco.acessarConta()
-                    break
+                    status = banco.acessarConta()
                 }
                 3 -> {
                     banco.listarClientes()
-                    break
                 }
                 else -> {
-                    println("Operação indevida!!!")
+                    println("Operaï¿½ï¿½o indevida!!!")
                     status = false
-                    break
                 }
             }
         }
